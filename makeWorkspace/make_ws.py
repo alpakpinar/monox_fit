@@ -41,7 +41,7 @@ def main():
     os.makedirs(outdir)
 
   fin = ROOT.TFile(args.file,'READ')
-  f_jes = ROOT.TFile("sys/shape_jes_uncs_smooth.root")
+  f_jes = ROOT.TFile("sys/monoj_monov_shape_jes_uncs_smooth.root")
   fout = ROOT.TFile(args.out,'RECREATE')
   dummy = []
   for category in args.categories:
