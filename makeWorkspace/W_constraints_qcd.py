@@ -59,12 +59,29 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag,year, convention="BU"):
     jes = 0.01
     jer = 0.01
   for c in CRs:
-    c.add_nuisance('CMS_VBF_scale_j'.format(YEAR=year), jes)
-    c.add_nuisance('CMS_res_j_{YEAR}'.format(YEAR=year), jer)
+    # Old JES/JER implementation:
+    # c.add_nuisance('CMS_VBF_scale_j'.format(YEAR=year), jes)
+    # c.add_nuisance('CMS_res_j_{YEAR}'.format(YEAR=year), jer)
     c.add_nuisance('CMS_veto{YEAR}_t'.format(YEAR=year),      0.01)
     c.add_nuisance('CMS_veto{YEAR}_m'.format(YEAR=year),      0.015)
     c.add_nuisance('CMS_veto{YEAR}_e'.format(YEAR=year),      0.03)
+  
+  # JES / JER uncertainties on the transfer factors
+  # Read them from the input sys file for VBF
+  jes_sys_file = ROOT.TFile.Open('./sys/vbf_jes_jer_tf_uncs.root')
+  all_keys = list(map(lambda x: x.GetName(), jes_sys_file.GetListOfKeys() ) )
+  # Get QCD Z ratios only for the relevant year
+  year_tag = re.findall('(17|18)', str(year))[0]
+  keys = [key for key in all_keys if re.match('wjets_over_.*{}.*qcd.*'.format(year_tag), key)]
 
+  # Get uncertainty for each split JES source
+  for key in keys:
+    nuisance_tag = 'CMS_VBF_scale_' + re.findall('(jes.*|jer.*)', key)[0]
+    nuisance_val = jes_sys_file.Get(key)
+    if 'wlnu_over_wmunu' in key:
+      CRs[0].add_nuisance(nuisance_tag, nuisance_val)
+    elif 'wlnu_over_wenu' in key:
+      CRs[1].add_nuisance(nuisance_tag, nuisance_val)
 
   # ############################ USER DEFINED ###########################################################
   # Add systematics in the following, for normalisations use name, relative size (0.01 --> 1%)
