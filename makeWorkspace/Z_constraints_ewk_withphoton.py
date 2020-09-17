@@ -75,7 +75,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag, year, convention="BU"):
   all_keys = list(map(lambda x: x.GetName(), jes_sys_file.GetListOfKeys() ) )
   # Get QCD Z ratios only for the relevant year
   year_tag = re.findall('(17|18)', str(year))[0]
-  keys = [key for key in all_keys if re.match('znunu_over_(zee|zmumu|wlnu){}.*ewk.*'.format(year_tag), key)]
+  keys = [key for key in all_keys if re.match('znunu_over_.*{}.*ewk.*'.format(year_tag), key)]
 
   # Get uncertainty for each split JES source
   for key in keys:
