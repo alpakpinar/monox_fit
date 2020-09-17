@@ -1,4 +1,5 @@
 import ROOT
+import re
 from counting_experiment import *
 from W_constraints import do_stat_unc
 # Define how a control region(s) transfer is made by defining *cmodel*, the calling pattern must be unchanged!
@@ -73,11 +74,33 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag, year,convention="BU"):
   CRs[2].add_nuisance('CMS_veto{YEAR}_m'.format(YEAR=year),     -0.015)
   CRs[2].add_nuisance('CMS_veto{YEAR}_e'.format(YEAR=year),     -0.03)
 
+  # JES / JER uncertainties on the transfer factors
+  # Read them from the input sys file for VBF
+  jes_sys_file = ROOT.TFile.Open('./sys/vbf_jes_jer_tf_uncs.root')
+  all_keys = list(map(lambda x: x.GetName(), jes_sys_file.GetListOfKeys() ) )
+  # Get QCD Z ratios only for the relevant year
+  year_tag = re.findall('(17|18)', str(year))[0]
+  keys = [key for key in all_keys if re.match('znunu_over_(zee|zmumu|wlnu){}.*qcd.*'.format(year_tag), key)]
+
+  # Get uncertainty for each split JES source
+  for key in keys:
+    nuisance_tag = 'CMS_VBF_scale_' + re.findall('(jes.*|jer.*)', key)[0]
+    nuisance_val = jes_sys_file.Get(key)
+    if 'znunu_over_zmumu' in key:
+      CRs[0].add_nuisance(nuisance_tag, nuisance_val)
+    elif 'znunu_over_zee' in key:
+      CRs[1].add_nuisance(nuisance_tag, nuisance_val)
+    elif 'znunu_over_wlnu' in key:
+      CRs[2].add_nuisance(nuisance_tag, nuisance_val)
+    elif 'znunu_over_gjets' in key:
+      CRs[3].add_nuisance(nuisance_tag, nuisance_val)
+
+  # Old implementation, comment out for now
   # JES / JER for Z/Z is 1% 
-  CRs[0].add_nuisance('CMS_VBF_scale_j',0.01)
-  CRs[1].add_nuisance('CMS_VBF_scale_j',0.01)
-  CRs[0].add_nuisance('CMS_res_j_{YEAR}'.format(YEAR=year),0.01)
-  CRs[1].add_nuisance('CMS_res_j_{YEAR}'.format(YEAR=year),0.01)
+  # CRs[0].add_nuisance('CMS_VBF_scale_j',0.01)
+  # CRs[1].add_nuisance('CMS_VBF_scale_j',0.01)
+  # CRs[0].add_nuisance('CMS_res_j_{YEAR}'.format(YEAR=year),0.01)
+  # CRs[1].add_nuisance('CMS_res_j_{YEAR}'.format(YEAR=year),0.01)
 
   # For Z/W, it goes the other direction
   if year==2017:
