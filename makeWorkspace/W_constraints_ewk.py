@@ -61,7 +61,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag,year, convention="BU"):
     raise RuntimeError("Year not recognized: " + str(year))
   for c in CRs:
     c.add_nuisance('jesRelativeBal', jes)
-    c.add_nuisance('jer_{YEAR}'.format(YEAR=year), jer)
+    c.add_nuisance('jer', jer)
     c.add_nuisance('CMS_veto{YEAR}_t'.format(YEAR=year),     0.01)
     c.add_nuisance('CMS_veto{YEAR}_m'.format(YEAR=year),     0.02)
     c.add_nuisance('CMS_veto{YEAR}_e'.format(YEAR=year),     0.03)
