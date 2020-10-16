@@ -16,8 +16,8 @@ procs = ['zmm','zee','w_weights','photon','wen','wmn']
 ### Years fit separately
 for year in [2017, 2018]:
     ws_file = './root/ws_vbf.root'.format(year=year)
-    fitdiag_file = 'diagnostics/fitDiagnostics_vbf_{year}.root'.format(year=year)
-    diffnuis_file = 'diagnostics/diffnuisances_vbf_{year}.root'.format(year=year)
+    fitdiag_file = 'diagnostics/sr_cr_fit/fitDiagnostics_vbf_{year}.root'.format(year=year)
+    diffnuis_file = 'diagnostics/sr_cr_fit/diffnuisances_vbf_{year}.root'.format(year=year)
     category='vbf_{YEAR}'.format(YEAR=year)
     outdir = './plots/{year}/'.format(year=year)
     for region in regions:
@@ -41,12 +41,12 @@ for year in [2017, 2018]:
 
 ### Years fit together
 outdir="plots/combined"
-diffnuis_file = 'diagnostics/diffnuisances_vbf_combined.root'
+diffnuis_file = 'diagnostics/sr_cr_fit/diffnuisances_vbf_combined.root'
 plot_nuis(diffnuis_file, outdir)
 
 for year in [2017,2018]:
     ws_file = "root/ws_vbf.root".format(year=year)
-    fitdiag_file = 'diagnostics/fitDiagnostics_vbf_combined.root'.format(year=year)
+    fitdiag_file = 'diagnostics/sr_cr_fit/fitDiagnostics_vbf_combined.root'.format(year=year)
     category='vbf_{year}'.format(year=year)
     outdir = './plots/combined_{year}/'.format(year=year)
     for region in regions:
