@@ -11,13 +11,13 @@ from HiggsAnalysis.CombinedLimit.ModelTools import *
 ROOT.gSystem.Load("libHiggsAnalysisCombinedLimit")
 pjoin = os.path.join
 
-def create_workspace(fin, category):
+def create_workspace(fin, fout, category):
     foutdir = fout.mkdir("category_"+category)
     
     wsin_combine = ROOT.RooWorkspace("wspace_"+category,"wspace_"+category)
     wsin_combine._import = SafeWorkspaceImporter(wsin_combine)
 
-    variable_name = 'mjj_{}'format(category)
+    variable_name = 'mjj_{}'.format(category)
     varl = ROOT.RooRealVar(variable_name, variable_name, 0,100000)    
 
     # Helper function
@@ -40,8 +40,8 @@ def create_workspace(fin, category):
         foutdir.WriteTObject(obj)
 
     # Get the input histogram
-    h = fin.Get('qcd_{}'.format(category) )
-    name = h.GetName()
+    obj = fin.Get('qcd_{}'.format(category) )
+    name = obj.GetName()
 
     write_obj(obj,name)
 
@@ -61,7 +61,7 @@ def main():
     dummy = []
     for category in ['vbf_2017', 'vbf_2018']:
         # Output root file containing the new workspace
-        fout = './bu_qcd_{}.root'.format(category)
+        fout = ROOT.TFile('./bu_qcd_{}.root'.format(category), 'RECREATE')
 
         wsin_combine = create_workspace(fin, fout, category)
         dummy.append(wsin_combine)
