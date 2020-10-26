@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
-TAG='default'
-INDIR=../input/vbf/2020-07-16_vbf_eemitigation_jerfix_circular_nohfhf_v2
+TAG='with_bu_qcd_template'
+INDIR=../input/vbf/merged_2020-10-19_vbfhinv_21Sep20v7_17Oct20_latest_setup
 INDIR="$(readlink -e $INDIR)"
 
 OUTDIR="../vbf/$(basename $INDIR)/${TAG}/root"
@@ -26,7 +26,7 @@ md5sum ${INFILE} >> ${INFOFILE}
 ./runModel.py ${WSFILE} --categories vbf_2017 --out ${OUTDIR}/combined_model_vbf_forIC_2017.root --rename "mjj_MTR_2017"
 ./runModel.py ${WSFILE} --categories vbf_2018 --out ${OUTDIR}/combined_model_vbf_forIC_2018.root --rename "mjj_MTR_2018"
 
-cp sys/vbf_qcd_nckw_ws_201*.root ${OUTDIR}
+cp sys/bu_qcd_vbf_201*.root ${OUTDIR}
 
 # Save the check sums for the output
 echo "--- OUTPUT ---" >> ${INFOFILE}
