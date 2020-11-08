@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 TAG='jes_v1'
-INDIR=../input/vbf/merged_2020-10-19_vbfhinv_21Sep20v7_17Oct20_latest_setup
+INDIR=../input/vbf/merged_2020-11-06_vbfhinv_03Sep20v7_jetid_all
 INDIR="$(readlink -e $INDIR)"
 
 OUTDIR="../vbf/$(basename $INDIR)/${TAG}/root"
