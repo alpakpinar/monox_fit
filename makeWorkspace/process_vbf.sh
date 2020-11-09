@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
-TAG='split_jec_tf_jes_v1'
-INDIR=../input/vbf/merged_2020-11-06_vbfhinv_03Sep20v7_jetid_all
+TAG='split_jec_tf'
+INDIR=../input/vbf/merged_2020-11-06_vbfhinv_03Sep20v7_jetid_on_endcap
 INDIR="$(readlink -e $INDIR)"
 
 OUTDIR="../vbf/$(basename $INDIR)/${TAG}/root"
