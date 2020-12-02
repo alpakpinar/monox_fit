@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-TAG='with_jes_v2_nofullsplitting'
+TAG='default'
 INDIR=../input/vbf/merged_2020-11-18_vbfhinv_03Sep20v7_gencheck_elemu_nonzero
 INDIR="$(readlink -e $INDIR)"
 
