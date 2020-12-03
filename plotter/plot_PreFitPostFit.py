@@ -21,7 +21,7 @@ def plotPreFitPostFit(region,category,ws_file, fitdiag_file,outdir,lumi,year,sb=
   f_data.cd("category_"+category)
   h_data = gDirectory.Get(datalab[region]+"_data")
 
-  h_postfit_sig = f_mlfit.Get("shapes_fit_b/"+category+"_"+category+"_signal/total_background")
+  h_postfit_sig = f_mlfit.Get("shapes_fit_s/"+category+"_"+category+"_signal/total_background")
   h_prefit_sig = f_mlfit.Get("shapes_prefit/"+category+"_"+category+"_signal/total_background")
 
   channel = {"singlemuon":category+"_singlemu", "dimuon":category+"_dimuon", "gjets":category+"_photon", "signal":category+"_signal", "singleelectron":category+"_singleel", "dielectron":category+"_dielec"}
@@ -134,13 +134,13 @@ def plotPreFitPostFit(region,category,ws_file, fitdiag_file,outdir,lumi,year,sb=
   # Post-Fit
   h_postfit = {}
   h_postfit['totalsig'] = f_mlfit.Get("shapes_fit_s/"+channel[region]+"/total")
-  h_postfit['total'] = f_mlfit.Get("shapes_fit_b/"+channel[region]+"/total")
+  h_postfit['total'] = f_mlfit.Get("shapes_fit_s/"+channel[region]+"/total")
   h_all_postfit = TH1F("h_all_postfit","h_all_postfit",len(binLowE)-1,array('d',binLowE))
   h_other_postfit = TH1F("h_other_postfit","h_other_postfit",len(binLowE)-1,array('d',binLowE))
   h_minor_postfit = TH1F("h_minor_postfit","h_minor_postfit",len(binLowE)-1,array('d',binLowE))
 
   h_stack_postfit = THStack("h_stack_postfit","h_stack_postfit")
-  h_postfit['totalv2'] = f_mlfit.Get("shapes_fit_b/"+channel[region]+"/total_background")
+  h_postfit['totalv2'] = f_mlfit.Get("shapes_fit_s/"+channel[region]+"/total_background")
 
   for i in range(1, h_postfit['totalv2'].GetNbinsX()+1):
     error = h_postfit['totalv2'].GetBinError(i)
@@ -148,7 +148,7 @@ def plotPreFitPostFit(region,category,ws_file, fitdiag_file,outdir,lumi,year,sb=
 
   for process in processes:
     print "\n\n",process
-    h_postfit[process] = f_mlfit.Get("shapes_fit_b/"+channel[region]+"/"+process)
+    h_postfit[process] = f_mlfit.Get("shapes_fit_s/"+channel[region]+"/"+process)
     if (not h_postfit[process]): continue
     if (str(h_postfit[process].Integral())=="nan"): continue
     for i in range(1,h_postfit[process].GetNbinsX()+1):
