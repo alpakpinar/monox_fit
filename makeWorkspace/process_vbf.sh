@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
-TAG='with_wh_zh_in_sr'
-INDIR=../input/vbf/merged_2020-12-03_vbfhinv_run_02Dec20
+TAG='default'
+INDIR=../input/vbf/merged_2020-12-10_vbfhinv_fullhornveto
 INDIR="$(readlink -e $INDIR)"
 
 OUTDIR="../vbf/$(basename $INDIR)/${TAG}/root"
