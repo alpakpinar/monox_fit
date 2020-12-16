@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
-TAG='ver_14Dec20_008de8'
-INDIR=../input/vbf/merged_2020-12-10_vbfhinv_veto_hotAndColdTowers_dR2
+TAG='2020-12-16_with_jesjer_fixes'
+INDIR=../input/vbf/merged_2020-12-03_vbfhinv_run_02Dec20
 INDIR="$(readlink -e $INDIR)"
 
 OUTDIR="../vbf/$(basename $INDIR)/${TAG}/root"
