@@ -64,7 +64,7 @@ def get_jes_variations(obj, f_jes, category):
 
   if 'vbf' in category:
     tag = 'ZJetsToNuNu'
-    key_valid =lambda x: (tag in x) and (not 'jesTotal' in x), keynames
+    key_valid =lambda x: (tag in x) and (not 'jesTotal' in x)
     regex_to_remove = '{TAG}20\d\d_'.format(TAG=tag)
   else:
     channel = 'monov' if 'monov' in category else 'monojet'
@@ -357,20 +357,21 @@ def create_workspace(fin, fout, category, args):
         diboson_varied_hists = get_diboson_variations(obj, category, process)
         write_dict(diboson_varied_hists)
 
-      if 'gjets' in key.GetName():
+      if 'gjets' in key.GetName() and 'vbf' not in category:
         photon_id_varied_hists = get_photon_id_variations(obj, category)
         write_dict(photon_id_varied_hists)
 
-      if key.GetName() == 'gjets_qcd':
+      if key.GetName() == 'gjets_qcd' and 'vbf' not in category:
         photon_qcd_varied_hists = get_photon_qcd_variations(obj, category)
         write_dict(photon_qcd_varied_hists)
 
       # Signal theory variations
-      signal_theory_varied_hists = get_signal_theory_variations(obj, category)
-      write_dict(signal_theory_varied_hists)
-
-      stat_varied_hists = get_stat_variations(obj, category)
-      write_dict(stat_varied_hists)
+      if 'vbf' not in category:
+        signal_theory_varied_hists = get_signal_theory_variations(obj, category)
+        write_dict(signal_theory_varied_hists)
+  
+        stat_varied_hists = get_stat_variations(obj, category)
+        write_dict(stat_varied_hists)
 
 
   # Write the workspace
