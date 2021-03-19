@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 TAG='default'
-INDIR=../input/vbf/merged_2021-03-18_vbfhinv_03Sep20v7_withHFmasking
+INDIR=../input/vbf/merged_2021-03-18_vbfhinv_03Sep20v7_withHFmasking_on_leadjet
 INDIR="$(readlink -e $INDIR)"
 
 OUTDIR="../vbf/$(basename $INDIR)/${TAG}/root"
@@ -33,6 +33,7 @@ git diff >> ${INFOFILE}
 ./runModel.py ${WSFILE} --categories vbf_2018 --out ${OUTDIR}/combined_model_vbf_forIC_2018.root --rename "mjj_MTR_2018"
 
 cp sys/vbf_qcd_nckw_ws_201*.root ${OUTDIR}
+cp sys/vbf_qcd_template_fromhf_201*.root ${OUTDIR}
 
 # Save the check sums for the output
 echo "--- OUTPUT ---" >> ${INFOFILE}
