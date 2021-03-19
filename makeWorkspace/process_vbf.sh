@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-TAG='default'
+TAG='with_new_qcd_template'
 INDIR=../input/vbf/merged_2021-03-18_vbfhinv_03Sep20v7_withHFmasking_on_leadjet
 INDIR="$(readlink -e $INDIR)"
 
